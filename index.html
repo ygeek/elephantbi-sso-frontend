@@ -19,10 +19,17 @@
           return res;
       }
     }
-    function GetQueryString(query_name, search) {
+    function GetQueryString(query_name) {
       var reg = new RegExp("(^|&)"+ query_name +"=([^&]*)(&|$)");
-      var s = search || window.location.search;
+      var s = window.location.search;
       var r = s.substr(1).match(reg);
+      if(r!=null) {
+        return decodeURI(r[2]); return null;
+      }
+    }
+    function GetQueryStringBySearch(query_name, search) {
+      var reg = new RegExp("(^|&)"+ query_name +"=([^&]*)(&|$)");
+      var r = search.substr(1).match(reg);
       if(r!=null) {
         return decodeURI(r[2]); return null;
       }
@@ -31,12 +38,14 @@
       var pathname = window.location.pathname;
       if (pathname === '/login') {
         var search = GetQueryString('redirect_url');
+        alter(search);
+        alter(decodeURIComponent(search));
         window.location.href = decodeURIComponent(search);
       }
       if (pathname === '/redirect') {
         var redirect_search = decodeURIComponent(window.location.search);
         alter(redirect_search);
-        var fronturl = GetQueryString('fronturl', redirect_search);
+        var fronturl = GetQueryStringBySearch('fronturl', redirect_search);
         alter(fronturl);
         getRes(
           window.location.search,
