@@ -38,15 +38,15 @@
       var pathname = window.location.pathname;
       if (pathname === '/login') {
         var search = GetQueryString('redirect_url');
-        alter(search);
-        alter(decodeURIComponent(search));
+        alert(search);
+        alert(decodeURIComponent(search));
         window.location.href = decodeURIComponent(search);
       }
       if (pathname === '/redirect') {
         var redirect_search = decodeURIComponent(window.location.search);
-        alter(redirect_search);
+        alert(redirect_search);
         var fronturl = GetQueryStringBySearch('fronturl', redirect_search);
-        alter(fronturl);
+        alert(fronturl);
         getRes(
           window.location.search,
           function(response) {
