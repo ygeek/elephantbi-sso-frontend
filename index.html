@@ -31,25 +31,21 @@
       var pathname = window.location.pathname;
       if (pathname === '/login') {
         var search = GetQueryString('redirect_url');
-
-        alert(search);
-        console.log('search <===========================>', search);
-        alert(decodeURIComponent(search));
-        console.log('decodeURIComponent(search) <===========================>', decodeURIComponent(search));
-
-        setTimeout(function() {
-          window.location.href = decodeURIComponent(search);
-        }, 10000);
+        window.location.href = decodeURIComponent(search);
       }
       if (pathname === '/redirect') {
         var auth_code = GetQueryString('auto_code');
         var fronturl = GetQueryString('fronturl');
         var env = GetQueryString('env');
 
+        console.log('auth_code <===========================>', auth_code);
+
         var res = {
           auth_code: auth_code,
           env: env,
         };
+        console.log('res <===========================>', res);
+        console.log('env <===========================>', env);
         getRes(
           res,
           function(response) {
