@@ -19,15 +19,12 @@
           return res;
       }
     }
-    function GetQueryString(query_name) {
+    function GetQueryString(query_name, search) {
       var reg = new RegExp("(^|&)"+ query_name +"=([^&]*)(&|$)");
-      console.log('window.location.search <===========================>', window.location.search);
-      alert(window.location.search);
-      var s = decodeURIComponent(window.location.search);
-      alert(s);
+      var s = search || window.location.search;
       var r = s.substr(1).match(reg);
       if(r!=null) {
-          return decodeURI(r[2]); return null;
+        return decodeURI(r[2]); return null;
       }
     }
     window.onload = function() {
@@ -37,18 +34,16 @@
         window.location.href = decodeURIComponent(search);
       }
       if (pathname === '/redirect') {
-        var auth_code = GetQueryString('auto_code');
-        var fronturl = GetQueryString('fronturl');
-        var env = GetQueryString('env');
-
-        var res = {
-          auth_code: auth_code,
-          env: env,
-        };
+        var redirect_search = decodeURIComponent(window.location.search);
+        alter(redirect_search);
+        var fronturl = GetQueryString('fronturl', redirect_search);
+        alter(fronturl);
         getRes(
           window.location.search,
           function(response) {
-            window.location.href = 'https://' + response.corp_id + fronturl + '/checklogin?token=' + response.token;
+            console.log('response <===========================>', response);
+            console.log('fronturl <===========================>', fronturl);
+            // window.location.href = 'https://' + response.corp_id + fronturl + '/login?token=' + response.token;
           }
         );
       }
