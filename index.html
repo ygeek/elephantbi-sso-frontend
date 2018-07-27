@@ -7,8 +7,8 @@
 <body>
   <script>
     window.host = 'BK_URL';
-    function getRes(callback) {
-      var url = window.host + '/';
+    function getRes(params, callback) {
+      var url = window.host + '/wx/sso';
       var xhr = new XMLHttpRequest()
       xhr.open('GET', url, false)
       xhr.setRequestHeader('Content-Type', 'applicant/json')
@@ -34,10 +34,20 @@
         window.location.href = search;
       }
       if (pathname === '/redirect') {
-        var redirectSearch = GetQueryString('auto_code');
-        getRes(function() {
-          window.location.href = '';
-        });
+        var auth_code = GetQueryString('auto_code');
+        var fronturl = GetQueryString('fronturl');
+        var env = GetQueryString('env');
+
+        var res = {
+          auth_code: auth_code,
+          env: env,
+        };
+        getRes(
+          res,
+          function(response) {
+            window.location.href = 'https://' + response.corp_id + fronturl + '/checklogin?token=' + response.token;
+          }
+        );
       }
     };
   </script>
