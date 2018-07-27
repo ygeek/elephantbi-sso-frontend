@@ -31,6 +31,12 @@
       var pathname = window.location.pathname;
       if (pathname === '/login') {
         var search = GetQueryString('redirect_url');
+
+        alert(search);
+        console.log('search <===========================>', search);
+        alert(decodeURIComponent(search));
+        console.log('decodeURIComponent(search) <===========================>', decodeURIComponent(search));
+
         window.location.href = decodeURIComponent(search);
       }
       if (pathname === '/redirect') {
