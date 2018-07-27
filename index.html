@@ -8,12 +8,11 @@
   <script>
     window.host = 'BK_URL';
     function getRes(params, callback) {
-      var url = window.host + '/wx/sso';
+      var url = window.host + '/wx/sso' + params;
       var xhr = new XMLHttpRequest()
       xhr.open('GET', url, false)
       xhr.setRequestHeader('Content-Type', 'applicant/json')
-      // xhr.setRequestHeader('token', token)
-      xhr.send(JSON.stringify(params))
+      xhr.send();
       if (xhr.status === 200) {
           var res = JSON.parse(xhr.responseText)
           callback(res);
@@ -31,15 +30,7 @@
       var pathname = window.location.pathname;
       if (pathname === '/login') {
         var search = GetQueryString('redirect_url');
-
-        alert(search);
-        console.log('search <===========================>', search);
-        alert(decodeURIComponent(search));
-        console.log('decodeURIComponent(search) <===========================>', decodeURIComponent(search));
-
-        setTimeout(function() {
-          window.location.href = decodeURIComponent(search);
-        }, 10000);
+        window.location.href = decodeURIComponent(search);
       }
       if (pathname === '/redirect') {
         var auth_code = GetQueryString('auto_code');
@@ -51,7 +42,7 @@
           env: env,
         };
         getRes(
-          res,
+          window.location.search,
           function(response) {
             window.location.href = 'https://' + response.corp_id + fronturl + '/checklogin?token=' + response.token;
           }
