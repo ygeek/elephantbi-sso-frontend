@@ -31,7 +31,15 @@
       var pathname = window.location.pathname;
       if (pathname === '/login') {
         var search = GetQueryString('redirect_url');
-        window.location.href = search;
+
+        alert(search);
+        console.log('search <===========================>', search);
+        alert(decodeURIComponent(search));
+        console.log('decodeURIComponent(search) <===========================>', decodeURIComponent(search));
+
+        setTimeout(function() {
+          window.location.href = decodeURIComponent(search);
+        }, 10000);
       }
       if (pathname === '/redirect') {
         var auth_code = GetQueryString('auto_code');
