@@ -13,11 +13,11 @@
       xhr.open('GET', url, false)
       xhr.setRequestHeader('Content-Type', 'applicant/json')
       // xhr.setRequestHeader('token', token)
-      xhr.send(null)
+      xhr.send(JSON.stringify(params))
       if (xhr.status === 200) {
           var res = JSON.parse(xhr.responseText)
           callback(res);
-          return res
+          return res;
       }
     }
     function GetQueryString(query_name) {
