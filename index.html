@@ -37,7 +37,9 @@
         alert(decodeURIComponent(search));
         console.log('decodeURIComponent(search) <===========================>', decodeURIComponent(search));
 
-        window.location.href = decodeURIComponent(search);
+        setTimeout(function() {
+          window.location.href = decodeURIComponent(search);
+        }, 10000);
       }
       if (pathname === '/redirect') {
         var auth_code = GetQueryString('auto_code');
