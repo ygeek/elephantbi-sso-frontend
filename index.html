@@ -42,14 +42,10 @@
       }
       if (pathname === '/redirect') {
         var redirect_search = decodeURIComponent(window.location.search);
-        alert(redirect_search);
-        var fronturl = GetQueryStringBySearch('fronturl', redirect_search);
-        alert(fronturl.replace(/\%/g, '.'));
-        alert(fronturl);
         getRes(
           window.location.search,
           function(response) {
-            window.location.href = 'https://' + response.corp_id + fronturl.replace(/\%/g, '.') + '/login?token=' + response.token;
+            window.location.href = 'https://' + response.corp_id + '.' + response.redirect_url + '/login?token=' + response.access_token;
           }
         );
       }
