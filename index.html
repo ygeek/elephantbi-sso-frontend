@@ -64,7 +64,8 @@
     }
     if (pathname === '/server_redirect') {
       var srEnv = GetQueryString('env');
-      window.location.href = 'https://' + getserverhost(srEnv) + window.location.search;
+      var authCode = GetQueryString('auth_code');
+      window.location.href = 'https://' + getserverhost(srEnv) + '/?auth_code=' + authCode;
     }
   </script>
 </body>
