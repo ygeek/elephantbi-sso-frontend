@@ -38,21 +38,18 @@
       var pathname = window.location.pathname;
       if (pathname === '/login') {
         var search = GetQueryString('redirect_url');
-        alert(search);
-        alert(decodeURIComponent(search));
         window.location.href = decodeURIComponent(search);
       }
       if (pathname === '/redirect') {
         var redirect_search = decodeURIComponent(window.location.search);
         alert(redirect_search);
         var fronturl = GetQueryStringBySearch('fronturl', redirect_search);
+        alert(fronturl.replace(/\%/g, '.'));
         alert(fronturl);
         getRes(
           window.location.search,
           function(response) {
-            console.log('response <===========================>', response);
-            console.log('fronturl <===========================>', fronturl);
-            // window.location.href = 'https://' + response.corp_id + fronturl + '/login?token=' + response.token;
+            window.location.href = 'https://' + response.corp_id + fronturl.replace(/\%/g, '.') + '/login?token=' + response.token;
           }
         );
       }
