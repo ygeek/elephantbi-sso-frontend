@@ -64,12 +64,11 @@
     if (pathname === '/redirect_report') {
       var path = GetQueryString('path');
       var ssId = GetQueryString('ss_id');
-      var chartId = GetQueryString('chart_id');
       getRes(
         window.location.search,
         function(response) {
 
-          var repurl = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + '/' + ssId + '/' + chartId + '?token=' + response.access_token;
+          var repurl = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + '/' + ssId + '?token=' + response.access_token;
           window.location.href = repurl;
         }
       );
