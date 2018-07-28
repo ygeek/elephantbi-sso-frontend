@@ -68,7 +68,11 @@
       getRes(
         window.location.search,
         function(response) {
-          window.location.href = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + '/' + ssId + '/' + chartId + '?token=' + response.access_token;
+
+          var repurl = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + '/' + ssId + '/' + chartId + '?token=' + response.access_token;
+          console.log('repurl <===========================>', repurl);
+          alert(repurl);
+          // window.location.href = repurl;
         }
       );
     }
