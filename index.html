@@ -58,7 +58,7 @@
       getRes(
         window.location.search,
         function(response) {
-          window.location.href = 'https://' + response.corp_id + '.' + response.redirect_url + '/login?token=' + response.access_token;
+          window.location.href = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/login?token=' + response.access_token;
         }
       );
     }
