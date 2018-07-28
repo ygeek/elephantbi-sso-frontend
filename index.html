@@ -63,7 +63,7 @@
       );
     }
     if (pathname === '/server_redirect') {
-      var srEnv = GetQueryString('ENV');
+      var srEnv = GetQueryString('env');
       window.location.href = 'https://' + getserverhost(srEnv) + window.location.search;
     }
   </script>
