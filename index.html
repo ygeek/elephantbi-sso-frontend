@@ -54,7 +54,6 @@
       window.location.href = decodeURIComponent(search);
     }
     if (pathname === '/redirect') {
-      var redirect_search = decodeURIComponent(window.location.search);
       getRes(
         window.location.search,
         function(response) {
@@ -63,13 +62,13 @@
       );
     }
     if (pathname === '/redirect_report') {
-      var redirect_search = decodeURIComponent(window.location.search);
       var path = GetQueryString('path');
       var ssId = GetQueryString('ss_id');
       getRes(
         window.location.search,
         function(response) {
-          window.location.href = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + ssId + '/?token=' + response.access_token;
+          alert(re);
+          window.location.href = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + '/' + ssId + '/?token=' + response.access_token;
         }
       );
     }
