@@ -7,6 +7,19 @@
 <body>
   <script>
     window.host = 'BK_URL';
+
+    function getserverhost(env) {
+      switch(env) {
+        case 'develop':
+          return 'weixin.flexceed.com';
+        case 'stage':
+          return 'weixin.visionpsn.com';
+        case 'product':
+        default :
+          return 'weixin.elephantbi.com';
+      }
+    }
+
     function getRes(params, callback) {
       var url = window.host + '/wx/sso' + params;
       var xhr = new XMLHttpRequest()
@@ -34,22 +47,25 @@
         return decodeURI(r[2]); return null;
       }
     }
-    window.onload = function() {
-      var pathname = window.location.pathname;
-      if (pathname === '/login') {
-        var search = GetQueryString('redirect_url');
-        window.location.href = decodeURIComponent(search);
-      }
-      if (pathname === '/redirect') {
-        var redirect_search = decodeURIComponent(window.location.search);
-        getRes(
-          window.location.search,
-          function(response) {
-            window.location.href = 'https://' + response.corp_id + '.' + response.redirect_url + '/login?token=' + response.access_token;
-          }
-        );
-      }
-    };
+
+    var pathname = window.location.pathname;
+    if (pathname === '/login') {
+      var search = GetQueryString('redirect_url');
+      window.location.href = decodeURIComponent(search);
+    }
+    if (pathname === '/redirect') {
+      var redirect_search = decodeURIComponent(window.location.search);
+      getRes(
+        window.location.search,
+        function(response) {
+          window.location.href = 'https://' + response.corp_id + '.' + response.redirect_url + '/login?token=' + response.access_token;
+        }
+      );
+    }
+    if (pathname === '/server_redirect') {
+      var srEnv = GetQueryString('ENV');
+      window.location.href = 'https://' getserverhost(srEnv) + window.location.search;
+    }
   </script>
 </body>
 </html>
