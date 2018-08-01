@@ -74,7 +74,7 @@
       window.location.href = decodeURIComponent(search);
     }
     if (pathname === '/redirect') {
-      if (errCode === -1) {
+      if (errCode == '-1') {
         authlink();
       }
       getRes(
@@ -87,7 +87,7 @@
     if (pathname === '/redirect_report') {
       var path = GetQueryString('path');
       var ssId = GetQueryString('ss_id');
-      if (errCode === -1) {
+      if (errCode == '-1') {
         authlink();
       }
       getRes(
@@ -99,7 +99,7 @@
       );
     }
     if (pathname === '/server_redirect') {
-      if (errCode === -1) {
+      if (errCode == '-1') {
         authlink();
       }
       var srEnv = GetQueryString('env');
