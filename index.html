@@ -8,6 +8,25 @@
   <script>
     window.host = 'BK_URL';
 
+    function requestWx(path, callback) {
+      var url = window.host + path;
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', url, false)
+      xhr.setRequestHeader('Content-Type', 'applicant/json')
+      xhr.send();
+      if (xhr.status === 200) {
+        var res = JSON.parse(xhr.responseText)
+        callback(res);
+        return res;
+      }
+    }
+    var authlink = () => {
+      requestWx('/wx/auth/link', function(res) {
+        var link = res.auth_link;
+        window.location.href = link;
+      });
+    };
+
     function getserverhost(env) {
       switch(env) {
         case 'develop':
@@ -48,12 +67,16 @@
       }
     }
 
+    var errCode = GetQueryString('err_code');
     var pathname = window.location.pathname;
     if (pathname === '/login') {
       var search = GetQueryString('redirect_url');
       window.location.href = decodeURIComponent(search);
     }
     if (pathname === '/redirect') {
+      if (errCode === -1) {
+        authlink();
+      }
       getRes(
         window.location.search,
         function(response) {
@@ -64,16 +87,21 @@
     if (pathname === '/redirect_report') {
       var path = GetQueryString('path');
       var ssId = GetQueryString('ss_id');
+      if (errCode === -1) {
+        authlink();
+      }
       getRes(
         window.location.search,
         function(response) {
-
           var repurl = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + '/' + ssId + '?token=' + response.access_token;
           window.location.href = repurl;
         }
       );
     }
     if (pathname === '/server_redirect') {
+      if (errCode === -1) {
+        authlink();
+      }
       var srEnv = GetQueryString('env');
       var authCode = GetQueryString('auth_code');
       window.location.href = 'https://' + getserverhost(srEnv) + '/?auth_code=' + authCode;
