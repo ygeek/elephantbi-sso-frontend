@@ -9,7 +9,7 @@
     window.host = 'BK_URL';
 
     function requestWx(path, callback) {
-      var url = window.host + path;
+      var url = 'BACKEND_URL' + path;
       var xhr = new XMLHttpRequest()
       xhr.open('GET', url, false)
       xhr.setRequestHeader('Content-Type', 'applicant/json')
