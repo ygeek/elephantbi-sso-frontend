@@ -67,44 +67,51 @@
       }
     }
 
-    var errCode = GetQueryString('err_code');
     var pathname = window.location.pathname;
     if (pathname === '/login') {
       var search = GetQueryString('redirect_url');
       window.location.href = decodeURIComponent(search);
     }
     if (pathname === '/redirect') {
-      if (errCode == '-1') {
-        authlink();
-      }
       getRes(
         window.location.search,
         function(response) {
-          window.location.href = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/login?token=' + response.access_token;
+          if (response.err_code == '-1') {
+            authlink();
+          } else {
+            window.location.href = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/login?token=' + response.access_token;
+          }
         }
       );
     }
     if (pathname === '/redirect_report') {
       var path = GetQueryString('path');
       var ssId = GetQueryString('ss_id');
-      if (errCode == '-1') {
-        authlink();
-      }
       getRes(
         window.location.search,
         function(response) {
           var repurl = 'https://wx_' + response.corp_id + '.' + response.redirect_url + '/' + path + '/' + ssId + '?token=' + response.access_token;
-          window.location.href = repurl;
+          if (response.err_code == '-1') {
+            authlink();
+          } else {
+            window.location.href = repurl;
+          }
         }
       );
     }
     if (pathname === '/server_redirect') {
-      if (errCode == '-1') {
-        authlink();
-      }
       var srEnv = GetQueryString('env');
       var authCode = GetQueryString('auth_code');
-      window.location.href = 'https://' + getserverhost(srEnv) + '/?auth_code=' + authCode;
+      getRes(
+        window.location.search,
+        function(response) {
+          if (response.err_code == '-1') {
+            authlink();
+          } else {
+            window.location.href = 'https://' + getserverhost(srEnv) + '/?auth_code=' + authCode;
+          }
+        }
+      );
     }
   </script>
 </body>
